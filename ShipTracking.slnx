@@ -1,0 +1,5 @@
+<Solution>
+  <Project Path="ShipManagement.IntegrationTests/ShipManagement.IntegrationTests.csproj" />
+  <Project Path="ShipManagement.Tests/ShipManagement.Tests.csproj" />
+  <Project Path="ShipManagement/ShipManagement.csproj" />
+</Solution>
