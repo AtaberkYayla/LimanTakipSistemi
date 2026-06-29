@@ -2,6 +2,9 @@ using Microsoft.EntityFrameworkCore;
 using ShipManagement.Data;
 using ShipManagement.Repositories;
 using ShipManagement.Services;
+using FluentValidation;
+using FluentValidation.AspNetCore;
+using ShipManagement.Validators;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +21,9 @@ builder.Services.AddScoped<IPortService, PortService>();
 builder.Services.AddScoped<IShipVisitService, ShipVisitService>();
 builder.Services.AddScoped<ICargoService, CargoService>();
 builder.Services.AddScoped<ICrewMemberService, CrewMemberService>();
+
+builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddValidatorsFromAssemblyContaining<CreateShipValidator>();
 
 var app = builder.Build();
 

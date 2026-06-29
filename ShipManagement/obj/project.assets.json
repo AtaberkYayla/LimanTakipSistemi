@@ -4063,23 +4063,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Ataberk\\.nuget\\packages\\": {},
+    "C:\\Users\\bimar.stajyer1\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Ataberk\\Desktop\\Bimar - Liman Takip Sistemi\\ShipTracking\\ShipManagement\\ShipManagement.csproj",
+      "projectUniqueName": "C:\\Users\\bimar.stajyer1\\Desktop\\Bimar - Liman Takip Sistemi\\ShipTracking\\ShipManagement\\ShipManagement.csproj",
       "projectName": "ShipManagement",
-      "projectPath": "C:\\Users\\Ataberk\\Desktop\\Bimar - Liman Takip Sistemi\\ShipTracking\\ShipManagement\\ShipManagement.csproj",
-      "packagesPath": "C:\\Users\\Ataberk\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Ataberk\\Desktop\\Bimar - Liman Takip Sistemi\\ShipTracking\\ShipManagement\\obj\\",
+      "projectPath": "C:\\Users\\bimar.stajyer1\\Desktop\\Bimar - Liman Takip Sistemi\\ShipTracking\\ShipManagement\\ShipManagement.csproj",
+      "packagesPath": "C:\\Users\\bimar.stajyer1\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\bimar.stajyer1\\Desktop\\Bimar - Liman Takip Sistemi\\ShipTracking\\ShipManagement\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\Ataberk\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\bimar.stajyer1\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -4088,6 +4088,7 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
