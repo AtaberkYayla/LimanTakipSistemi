@@ -6,8 +6,17 @@ using FluentValidation;
 using FluentValidation.AspNetCore;
 using ShipManagement.Validators;
 using ShipManagement.Middleware;
+using Serilog;
+
+Log.Logger = new LoggerConfiguration()
+    .WriteTo.Console()
+    .WriteTo.File("Logs/log-.txt", rollingInterval: RollingInterval.Day)
+    .Enrich.FromLogContext()
+    .CreateLogger();
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Host.UseSerilog();
 
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 builder.Services.AddProblemDetails();
@@ -24,6 +33,7 @@ builder.Services.AddScoped<IPortService, PortService>();
 builder.Services.AddScoped<IShipVisitService, ShipVisitService>();
 builder.Services.AddScoped<ICargoService, CargoService>();
 builder.Services.AddScoped<ICrewMemberService, CrewMemberService>();
+builder.Services.AddScoped<IShipCrewAssignmentService, ShipCrewAssignmentService>();
 
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddValidatorsFromAssemblyContaining<CreateShipValidator>();
@@ -36,7 +46,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-
+app.UseSerilogRequestLogging();
 app.UseExceptionHandler();
 app.UseHttpsRedirection();
 app.UseAuthorization();
