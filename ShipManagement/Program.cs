@@ -20,6 +20,15 @@ builder.Host.UseSerilog();
 
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 builder.Services.AddProblemDetails();
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowReact", policy =>
+    {
+        policy.WithOrigins("http://localhost:5173")
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -48,10 +57,17 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseSerilogRequestLogging();
+app.UseCors("AllowReact");
 app.UseExceptionHandler();
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
 app.MapHealthChecks("/health");
+
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    await ShipManagement.Data.Seed.DbSeeder.SeedAsync(context);
+}
 
 app.Run();
