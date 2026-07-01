@@ -64,8 +64,9 @@ app.UseAuthorization();
 app.MapControllers();
 app.MapHealthChecks("/health");
 
-using (var scope = app.Services.CreateScope())
+if (!app.Environment.IsEnvironment("Testing"))
 {
+    using var scope = app.Services.CreateScope();
     var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     await ShipManagement.Data.Seed.DbSeeder.SeedAsync(context);
 }
