@@ -5,6 +5,7 @@ import ShipVisits from './pages/ShipVisits';
 import Cargoes from './pages/Cargoes';
 import CrewMembers from './pages/CrewMembers';
 import ShipCrewAssignments from './pages/ShipCrewAssignments';
+import Dashboard from './pages/Dashboard';
 import './App.css';
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
         <nav className="navbar">
           <div className="navbar-brand">🚢 Liman Takip Sistemi</div>
           <div className="navbar-links">
+            <NavLink to="/dashboard" className={({ isActive }) => isActive ? 'active' : ''}>Dashboard</NavLink>
             <NavLink to="/ships" className={({ isActive }) => isActive ? 'active' : ''}>Gemiler</NavLink>
             <NavLink to="/ports" className={({ isActive }) => isActive ? 'active' : ''}>Limanlar</NavLink>
             <NavLink to="/visits" className={({ isActive }) => isActive ? 'active' : ''}>Ziyaretler</NavLink>
@@ -24,7 +26,8 @@ function App() {
         </nav>
         <main className="main-content">
           <Routes>
-            <Route path="/" element={<Ships />} />
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/dashboard" element={<Dashboard />} />
             <Route path="/ships" element={<Ships />} />
             <Route path="/ports" element={<Ports />} />
             <Route path="/visits" element={<ShipVisits />} />

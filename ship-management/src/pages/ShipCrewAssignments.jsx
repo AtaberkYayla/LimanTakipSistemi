@@ -104,7 +104,7 @@ function ShipCrewAssignments() {
             <tr key={assignment.assignmentId}>
               <td>{assignment.shipName}</td>
               <td>{assignment.crewFullName}</td>
-              <td>{new Date(assignment.assignmentDate).toLocaleDateString('tr-TR')}</td>
+              <td>{new Date(assignment.assignmentDate).toLocaleString('tr-TR')}</td>
               <td>
                 <button className="btn btn-secondary btn-sm" onClick={() => openEdit(assignment)}>Düzenle</button>
                 {' '}

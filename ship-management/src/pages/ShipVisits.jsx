@@ -109,8 +109,8 @@ function ShipVisits() {
             <tr key={visit.visitId}>
               <td>{visit.shipName}</td>
               <td>{visit.portName}</td>
-              <td>{new Date(visit.arrivalDate).toLocaleDateString('tr-TR')}</td>
-              <td>{visit.departureDate ? new Date(visit.departureDate).toLocaleDateString('tr-TR') : '-'}</td>
+              <td>{new Date(visit.arrivalDate).toLocaleString('tr-TR')}</td>
+              <td>{visit.departureDate ? new Date(visit.departureDate).toLocaleString('tr-TR') : '-'}</td>
               <td>{visit.purpose}</td>
               <td>
                 <button className="btn btn-secondary btn-sm" onClick={() => openEdit(visit)}>Düzenle</button>
