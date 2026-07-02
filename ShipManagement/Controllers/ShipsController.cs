@@ -50,4 +50,11 @@ public class ShipsController : ControllerBase
         var result = await _shipService.DeleteAsync(id);
         return result.IsSuccess ? NoContent() : NotFound(result.Error);
     }
+
+    [HttpGet("search")]
+    public async Task<IActionResult> Search([FromQuery] ShipFilterDto filter)
+    {
+        var result = await _shipService.GetFilteredAsync(filter);
+        return result.IsSuccess ? Ok(result.Value) : BadRequest(result.Error);
+    }
 }

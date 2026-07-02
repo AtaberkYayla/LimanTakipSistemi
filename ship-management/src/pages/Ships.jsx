@@ -11,19 +11,51 @@ function Ships() {
     name: '', imo: '', type: '', flag: '', yearBuilt: ''
   });
 
-  useEffect(() => {
-    fetchShips();
-  }, []);
+  const [filter, setFilter] = useState({
+    name: '', type: '', flag: '', yearBuiltMin: '', yearBuiltMax: '', page: 1, pageSize: 10
+  });
+  const [pagination, setPagination] = useState({
+    totalCount: 0, totalPages: 1, hasNextPage: false, hasPreviousPage: false
+  });
 
-  const fetchShips = async () => {
+  useEffect(() => { fetchShipsWithFilter(); }, [filter.page]);
+
+  const fetchShipsWithFilter = async (customFilter = filter) => {
     try {
-      const res = await api.get('/ships');
-      setShips(res.data);
+      const params = new URLSearchParams();
+      if (customFilter.name) params.append('name', customFilter.name);
+      if (customFilter.type) params.append('type', customFilter.type);
+      if (customFilter.flag) params.append('flag', customFilter.flag);
+      if (customFilter.yearBuiltMin) params.append('yearBuiltMin', customFilter.yearBuiltMin);
+      if (customFilter.yearBuiltMax) params.append('yearBuiltMax', customFilter.yearBuiltMax);
+      params.append('page', customFilter.page);
+      params.append('pageSize', customFilter.pageSize);
+
+      const res = await api.get(`/ships/search?${params.toString()}`);
+      setShips(res.data.items);
+      setPagination({
+        totalCount: res.data.totalCount,
+        totalPages: res.data.totalPages,
+        hasNextPage: res.data.hasNextPage,
+        hasPreviousPage: res.data.hasPreviousPage
+      });
     } catch {
       setError('Gemiler yüklenemedi.');
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleSearch = () => {
+    const newFilter = { ...filter, page: 1 };
+    setFilter(newFilter);
+    fetchShipsWithFilter(newFilter);
+  };
+
+  const handleReset = () => {
+    const resetFilter = { name: '', type: '', flag: '', yearBuiltMin: '', yearBuiltMax: '', page: 1, pageSize: 10 };
+    setFilter(resetFilter);
+    fetchShipsWithFilter(resetFilter);
   };
 
   const openCreate = () => {
@@ -34,13 +66,7 @@ function Ships() {
   };
 
   const openEdit = (ship) => {
-    setForm({
-      name: ship.name,
-      imo: ship.imo,
-      type: ship.type,
-      flag: ship.flag,
-      yearBuilt: ship.yearBuilt
-    });
+    setForm({ name: ship.name, imo: ship.imo, type: ship.type, flag: ship.flag, yearBuilt: ship.yearBuilt });
     setEditingShip(ship);
     setError('');
     setShowModal(true);
@@ -56,7 +82,14 @@ function Ships() {
       setShowModal(false);
       fetchShips();
     } catch (err) {
-      setError(err.response?.data || 'Bir hata oluştu.');
+      const data = err.response?.data;
+      if (data?.errors) {
+        setError(Object.values(data.errors).flat().join(', '));
+      } else if (typeof data === 'string') {
+        setError(data);
+      } else {
+        setError('Bir hata oluştu.');
+      }
     }
   };
 
@@ -77,6 +110,21 @@ function Ships() {
       <div className="page-header">
         <h1>Gemi Yönetimi</h1>
         <button className="btn btn-primary" onClick={openCreate}>+ Yeni Gemi</button>
+      </div>
+
+      {/* Arama Filtresi */}
+      <div style={{ background: 'white', padding: '1rem', borderRadius: '8px', marginBottom: '1rem', boxShadow: '0 1px 3px rgba(0,0,0,0.1)' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '0.5rem', marginBottom: '0.5rem' }}>
+          <input placeholder="Gemi Adı" value={filter.name} onChange={e => setFilter({ ...filter, name: e.target.value })} style={{ padding: '0.5rem', border: '1px solid #ddd', borderRadius: '4px' }} />
+          <input placeholder="Tip" value={filter.type} onChange={e => setFilter({ ...filter, type: e.target.value })} style={{ padding: '0.5rem', border: '1px solid #ddd', borderRadius: '4px' }} />
+          <input placeholder="Bayrak" value={filter.flag} onChange={e => setFilter({ ...filter, flag: e.target.value })} style={{ padding: '0.5rem', border: '1px solid #ddd', borderRadius: '4px' }} />
+          <input type="number" placeholder="Min Yıl" value={filter.yearBuiltMin} onChange={e => setFilter({ ...filter, yearBuiltMin: e.target.value })} style={{ padding: '0.5rem', border: '1px solid #ddd', borderRadius: '4px' }} />
+          <input type="number" placeholder="Max Yıl" value={filter.yearBuiltMax} onChange={e => setFilter({ ...filter, yearBuiltMax: e.target.value })} style={{ padding: '0.5rem', border: '1px solid #ddd', borderRadius: '4px' }} />
+        </div>
+        <div style={{ display: 'flex', gap: '0.5rem' }}>
+          <button className="btn btn-primary" onClick={handleSearch}>Ara</button>
+          <button className="btn btn-secondary" onClick={handleReset}>Temizle</button>
+        </div>
       </div>
 
       {error && <div className="error-message">{error}</div>}
@@ -109,6 +157,16 @@ function Ships() {
           ))}
         </tbody>
       </table>
+
+      {/* Pagination */}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '1rem' }}>
+        <span style={{ color: '#666', fontSize: '0.9rem' }}>Toplam {pagination.totalCount} kayıt</span>
+        <div style={{ display: 'flex', gap: '0.5rem' }}>
+          <button className="btn btn-secondary btn-sm" disabled={!pagination.hasPreviousPage} onClick={() => setFilter(prev => ({ ...prev, page: prev.page - 1 }))}>← Önceki</button>
+          <span style={{ padding: '0.3rem 0.7rem', background: '#1a3c5e', color: 'white', borderRadius: '4px', fontSize: '0.85rem' }}>{filter.page} / {pagination.totalPages}</span>
+          <button className="btn btn-secondary btn-sm" disabled={!pagination.hasNextPage} onClick={() => setFilter(prev => ({ ...prev, page: prev.page + 1 }))}>Sonraki →</button>
+        </div>
+      </div>
 
       {showModal && (
         <div className="modal-overlay">

@@ -44,7 +44,7 @@ builder.Services.AddScoped<ICargoService, CargoService>();
 builder.Services.AddScoped<ICrewMemberService, CrewMemberService>();
 builder.Services.AddScoped<IShipCrewAssignmentService, ShipCrewAssignmentService>();
 
-builder.Services.AddHealthChecks().AddSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")!);
+builder.Services.AddHealthChecks();
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddValidatorsFromAssemblyContaining<CreateShipValidator>();
 
