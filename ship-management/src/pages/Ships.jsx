@@ -158,7 +158,6 @@ function Ships() {
         </tbody>
       </table>
 
-      {/* Pagination */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginTop: '1rem' }}>
         <span style={{ color: '#666', fontSize: '0.9rem' }}>Toplam {pagination.totalCount} kayıt</span>
         <div style={{ display: 'flex', gap: '0.5rem' }}>

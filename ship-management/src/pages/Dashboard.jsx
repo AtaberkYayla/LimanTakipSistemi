@@ -55,12 +55,12 @@ function Dashboard() {
       {summary && (
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(6, 1fr)', gap: '1rem', marginBottom: '2rem' }}>
           {[
-            { label: 'Gemiler', value: summary.totalShips, icon: '🚢' },
-            { label: 'Limanlar', value: summary.totalPorts, icon: '⚓' },
-            { label: 'Mürettebat', value: summary.totalCrewMembers, icon: '👤' },
-            { label: 'Yükler', value: summary.totalCargoes, icon: '📦' },
-            { label: 'Ziyaretler', value: summary.totalVisits, icon: '📅' },
-            { label: 'Atamalar', value: summary.totalAssignments, icon: '📋' },
+            { label: 'Gemiler', value: summary.totalShips},
+            { label: 'Limanlar', value: summary.totalPorts},
+            { label: 'Mürettebat', value: summary.totalCrewMembers},
+            { label: 'Yükler', value: summary.totalCargoes},
+            { label: 'Ziyaretler', value: summary.totalVisits},
+            { label: 'Atamalar', value: summary.totalAssignments},
           ].map((item, i) => (
             <div key={i} style={{
               background: 'white', borderRadius: '8px', padding: '1.2rem',
@@ -74,9 +74,7 @@ function Dashboard() {
         </div>
       )}
 
-      {/* Grafikler - Satır 1 */}
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1rem' }}>
-        {/* Gemi Tipi Dağılımı */}
         <div style={{ background: 'white', borderRadius: '8px', padding: '1.5rem', boxShadow: '0 1px 3px rgba(0,0,0,0.1)' }}>
           <h3 style={{ marginBottom: '1rem', color: '#1a3c5e' }}>Gemi Tipi Dağılımı</h3>
           <ResponsiveContainer width="100%" height={250}>
@@ -89,7 +87,6 @@ function Dashboard() {
           </ResponsiveContainer>
         </div>
 
-        {/* Bayrak Dağılımı */}
         <div style={{ background: 'white', borderRadius: '8px', padding: '1.5rem', boxShadow: '0 1px 3px rgba(0,0,0,0.1)' }}>
           <h3 style={{ marginBottom: '1rem', color: '#1a3c5e' }}>Bayrak Dağılımı</h3>
           <ResponsiveContainer width="100%" height={250}>
@@ -104,9 +101,7 @@ function Dashboard() {
         </div>
       </div>
 
-      {/* Grafikler - Satır 2 */}
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1rem' }}>
-        {/* Mürettebat Rol Dağılımı */}
         <div style={{ background: 'white', borderRadius: '8px', padding: '1.5rem', boxShadow: '0 1px 3px rgba(0,0,0,0.1)' }}>
           <h3 style={{ marginBottom: '1rem', color: '#1a3c5e' }}>Mürettebat Rol Dağılımı</h3>
           <ResponsiveContainer width="100%" height={250}>
@@ -120,7 +115,6 @@ function Dashboard() {
           </ResponsiveContainer>
         </div>
 
-        {/* Liman Ziyaret Sayıları */}
         <div style={{ background: 'white', borderRadius: '8px', padding: '1.5rem', boxShadow: '0 1px 3px rgba(0,0,0,0.1)' }}>
           <h3 style={{ marginBottom: '1rem', color: '#1a3c5e' }}>Liman Ziyaret Sayıları</h3>
           <ResponsiveContainer width="100%" height={250}>
@@ -135,7 +129,6 @@ function Dashboard() {
         </div>
       </div>
 
-      {/* Grafikler - Satır 3 */}
       <div style={{ background: 'white', borderRadius: '8px', padding: '1.5rem', boxShadow: '0 1px 3px rgba(0,0,0,0.1)' }}>
         <h3 style={{ marginBottom: '1rem', color: '#1a3c5e' }}>Yük Tipi Dağılımı (Ton)</h3>
         <ResponsiveContainer width="100%" height={250}>

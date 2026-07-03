@@ -48,6 +48,8 @@ builder.Services.AddHealthChecks();
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddValidatorsFromAssemblyContaining<CreateShipValidator>();
 
+builder.Services.AddHostedService<AISStreamService>();
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -66,9 +68,16 @@ app.MapHealthChecks("/health");
 
 if (!app.Environment.IsEnvironment("Testing"))
 {
-    using var scope = app.Services.CreateScope();
-    var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    await ShipManagement.Data.Seed.DbSeeder.SeedAsync(context);
+    try
+    {
+        using var scope = app.Services.CreateScope();
+        var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+        await ShipManagement.Data.Seed.DbSeeder.SeedAsync(context);
+    }
+    catch (Exception ex)
+    {
+        Log.Warning("Seed data yüklenemedi: {Message}", ex.Message);
+    }
 }
 
 app.Run();

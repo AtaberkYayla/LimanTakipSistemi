@@ -6,6 +6,7 @@ import Cargoes from './pages/Cargoes';
 import CrewMembers from './pages/CrewMembers';
 import ShipCrewAssignments from './pages/ShipCrewAssignments';
 import Dashboard from './pages/Dashboard';
+import LiveMap from './pages/LiveMap';
 import './App.css';
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
           <div className="navbar-brand">🚢 Liman Takip Sistemi</div>
           <div className="navbar-links">
             <NavLink to="/dashboard" className={({ isActive }) => isActive ? 'active' : ''}>Dashboard</NavLink>
+            <NavLink to="/live-map" className={({ isActive }) => isActive ? 'active' : ''}>Canlı Harita</NavLink>
             <NavLink to="/ships" className={({ isActive }) => isActive ? 'active' : ''}>Gemiler</NavLink>
             <NavLink to="/ports" className={({ isActive }) => isActive ? 'active' : ''}>Limanlar</NavLink>
             <NavLink to="/visits" className={({ isActive }) => isActive ? 'active' : ''}>Ziyaretler</NavLink>
@@ -28,6 +30,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/live-map" element={<LiveMap />} />
             <Route path="/ships" element={<Ships />} />
             <Route path="/ports" element={<Ports />} />
             <Route path="/visits" element={<ShipVisits />} />
