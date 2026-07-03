@@ -94,4 +94,41 @@ public class ShipService : IShipService
         Flag = s.Flag,
         YearBuilt = s.YearBuilt
     };
+
+    public async Task<Result<PaginatedResult<ShipDto>>> GetFilteredAsync(ShipFilterDto filter)
+    {
+        var query = _context.Ships.AsQueryable();
+
+        if (!string.IsNullOrWhiteSpace(filter.Name))
+            query = query.Where(s => s.Name.Contains(filter.Name));
+
+        if (!string.IsNullOrWhiteSpace(filter.Type))
+            query = query.Where(s => s.Type.Contains(filter.Type));
+
+        if (!string.IsNullOrWhiteSpace(filter.Flag))
+            query = query.Where(s => s.Flag.Contains(filter.Flag));
+
+        if (filter.YearBuiltMin.HasValue)
+            query = query.Where(s => s.YearBuilt >= filter.YearBuiltMin.Value);
+
+        if (filter.YearBuiltMax.HasValue)
+            query = query.Where(s => s.YearBuilt <= filter.YearBuiltMax.Value);
+
+        var totalCount = await query.CountAsync();
+
+        var items = await query
+            .Skip((filter.Page - 1) * filter.PageSize)
+            .Take(filter.PageSize)
+            .ToListAsync();
+
+        var result = new PaginatedResult<ShipDto>
+        {
+            Items = items.Select(ToDto),
+            TotalCount = totalCount,
+            Page = filter.Page,
+            PageSize = filter.PageSize
+        };
+
+        return Result<PaginatedResult<ShipDto>>.Success(result);
+    }
 }
